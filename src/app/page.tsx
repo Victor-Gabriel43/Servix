@@ -2,6 +2,7 @@ import { getSiteUrl, siteConfig } from "@/config/site";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { About } from "@/components/sections/About";
+import { Capabilities } from "@/components/sections/Capabilities";
 import { Contact } from "@/components/sections/Contact";
 import { Hero } from "@/components/sections/Hero";
 import { Problem } from "@/components/sections/Problem";
@@ -38,6 +39,7 @@ export default function HomePage() {
         <Hero />
         <Problem />
         <Solution />
+        <Capabilities />
         <Process />
         <Products />
         <About />

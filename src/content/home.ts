@@ -159,3 +159,37 @@ export const contact = {
   ],
   reassurance: "Enviar uma mensagem não gera nenhum compromisso.",
 } as const;
+
+export const capabilities = {
+  label: "Possibilidades",
+  title: "Um sistema que trabalha junto com você",
+  lead: "Exemplos do que um sistema sob medida pode fazer pela rotina de um pequeno negócio. Em cada projeto, definimos juntos o que faz sentido para o seu.",
+  disclaimer: "Telas ilustrativas, com dados fictícios. Não representam clientes nem sistemas existentes.",
+  cards: [
+    {
+      key: "timeline",
+      title: "Tudo registrado em um só lugar",
+      text: "Pedidos, atendimentos e pagamentos no mesmo histórico, em vez de espalhados entre planilhas, cadernos e mensagens.",
+    },
+    {
+      key: "automation",
+      title: "Menos tarefas repetidas",
+      text: "Etapas feitas à mão todos os dias — como atualizar o estoque ou avisar um cliente — podem acontecer sozinhas.",
+    },
+    {
+      key: "overview",
+      title: "O dia a dia à vista",
+      text: "Um painel simples mostra o que está pendente, o que foi concluído e o que precisa de atenção.",
+    },
+    {
+      key: "modules",
+      title: "Do tamanho do seu negócio",
+      text: "Comece pelo essencial e acrescente novas partes ao sistema conforme a necessidade aparecer.",
+    },
+  ],
+} as const;
+
+export const finalCta = {
+  titleLines: ["Seu negócio, organizado.", "Do seu jeito."],
+  cta: { label: "Fale com a Servix", href: "/#contato" },
+} as const;

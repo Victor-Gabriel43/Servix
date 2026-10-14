@@ -198,6 +198,28 @@ test.describe("Elemento visual e movimento", () => {
   });
 });
 
+test.describe("Possibilidades e rodapé", () => {
+  test("cards ilustrativos são identificados como fictícios e ocultos de leitores de tela", async ({ page }) => {
+    await page.goto("/");
+    const section = page.locator("#possibilidades");
+    await expect(section.getByRole("heading", { level: 3 })).toHaveCount(4);
+    await expect(section.getByText(/Telas ilustrativas, com dados fictícios/)).toBeVisible();
+    // as telas fictícias ficam fora da árvore de acessibilidade
+    const mockText = section.getByText("Pedido #1043 confirmado");
+    await expect(mockText).toHaveCount(1);
+    await expect(mockText.locator('xpath=ancestor::*[@aria-hidden="true"]')).toHaveCount(1);
+  });
+
+  test("chamada final leva ao formulário e o logotipo gigante é decorativo", async ({ page }) => {
+    await page.goto("/");
+    const footer = page.locator("#rodape");
+    await expect(footer.getByText("Seu negócio, organizado.")).toBeVisible();
+    await expect(footer.locator(".wordmark")).toHaveAttribute("aria-hidden", "true");
+    await footer.getByRole("link", { name: /Fale com a Servix/ }).first().click();
+    await expect(page).toHaveURL(/#contato$/);
+  });
+});
+
 test.describe("Sem JavaScript", () => {
   test.use({ javaScriptEnabled: false });
 

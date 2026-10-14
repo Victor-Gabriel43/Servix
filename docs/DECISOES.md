@@ -19,6 +19,17 @@
 - **Marca**: monograma "SX" e logotipo "SERVIX" redesenhados em vetor a partir
   das imagens enviadas; cor via `currentColor`.
 
+## Seção "Possibilidades" e rodapé (padrões da Resend)
+
+- Abertura centralizada com a marca em um tile de vidro escuro.
+- Grade de cards com mini-interfaces animadas só com CSS (linha do tempo,
+  automação, painel do dia, módulos). São **ilustrativas, com dados
+  fictícios**, rotuladas como tal e ocultas de leitores de tela.
+- Rodapé: chamada final em Instrument Serif (OFL, hospedada em
+  `src/fonts`, sem pré-carregamento) e o logotipo SERVIX gigante em contorno,
+  com luz que segue o cursor e varredura lenta para telas de toque.
+- Redes sociais (quando configuradas) em botões redondos com siglas.
+
 ## Marca 3D do hero
 
 O "S" do logotipo Servix extrudado em 3D, em cromo negro, com um pulso de

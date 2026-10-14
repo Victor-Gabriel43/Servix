@@ -18,7 +18,7 @@ export function PointerSpotlight() {
 
     const update = () => {
       frame = 0;
-      for (const el of document.querySelectorAll<HTMLElement>(".panel")) {
+      for (const el of document.querySelectorAll<HTMLElement>(".panel, .spotlight")) {
         const rect = el.getBoundingClientRect();
         if (rect.bottom < -200 || rect.top > window.innerHeight + 200) continue;
         el.style.setProperty("--mx", `${x - rect.left}px`);

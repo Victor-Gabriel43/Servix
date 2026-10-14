@@ -19,6 +19,7 @@
 
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", monospace;
+  --font-serif: var(--font-instrument-serif), ui-serif, Georgia, serif;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 
@@ -318,6 +319,48 @@
     box-shadow: 0 0 0 1px rgb(255 255 255 / 0.22) inset;
   }
 
+  .mock-toggle {
+    background-color: rgb(255 255 255 / 0.08);
+  }
+
+  /* Tile de vidro escuro com a marca (abertura de seção) */
+  .glass-tile {
+    background:
+      radial-gradient(120% 90% at 50% 120%, rgb(66 217 255 / 0.35), transparent 55%),
+      linear-gradient(180deg, #1c1c20, #070708);
+    box-shadow:
+      0 0 0 1px rgb(255 255 255 / 0.12) inset,
+      0 1px 0 0 rgb(255 255 255 / 0.25) inset,
+      0 -12px 30px -14px rgb(66 217 255 / 0.9) inset,
+      0 30px 60px -20px rgb(66 217 255 / 0.35);
+  }
+
+  .glass-tile svg {
+    filter: brightness(2.1) drop-shadow(0 8px 12px rgb(0 0 0 / 0.7));
+  }
+  .glass-tile svg polygon {
+    vector-effect: non-scaling-stroke;
+  }
+
+  /* Logotipo gigante: luz sob o cursor (camada glow) e varredura lenta */
+  .wordmark {
+    --mx: -9999px;
+    --my: -9999px;
+  }
+  .wordmark-glow {
+    -webkit-mask-image: radial-gradient(240px circle at var(--mx) var(--my), #000, transparent 70%);
+    mask-image: radial-gradient(240px circle at var(--mx) var(--my), #000, transparent 70%);
+  }
+  .wordmark-sweep {
+    -webkit-mask-image: linear-gradient(100deg, transparent 35%, #000 50%, transparent 65%);
+    mask-image: linear-gradient(100deg, transparent 35%, #000 50%, transparent 65%);
+    -webkit-mask-size: 250% 100%;
+    mask-size: 250% 100%;
+    -webkit-mask-position: 120% 0;
+    mask-position: 120% 0;
+    opacity: 0.8;
+  }
+
   /* Anéis orbitais atrás da marca 3D */
   .orbit {
     border: 1px solid rgb(255 255 255 / 0.06);
@@ -400,6 +443,96 @@ body::after {
 @keyframes orbit-spin {
   to {
     --orbit-angle: 360deg;
+  }
+}
+
+@keyframes mock-scroll {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, -50%, 0);
+  }
+}
+
+/* Linhas de automação: aparecem em sequência; terminam visíveis. */
+@keyframes mock-line {
+  0%,
+  8% {
+    opacity: 0;
+    transform: translate3d(-8px, 0, 0);
+  }
+  14%,
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes mock-press {
+  0%,
+  6%,
+  100% {
+    transform: none;
+  }
+  3% {
+    transform: scale(0.92);
+  }
+}
+
+@keyframes mock-bar {
+  0%,
+  10% {
+    transform: scaleY(0.15);
+  }
+  30%,
+  100% {
+    transform: none;
+  }
+}
+
+@keyframes mock-glow {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+/* Interruptores ligando em sequência; terminam ligados. */
+@keyframes mock-toggle {
+  0%,
+  10% {
+    background-color: rgb(255 255 255 / 0.08);
+  }
+  16%,
+  100% {
+    background-color: var(--color-accent);
+  }
+}
+@keyframes mock-knob {
+  0%,
+  10% {
+    transform: none;
+  }
+  16%,
+  100% {
+    transform: translateX(1rem);
+  }
+}
+
+@keyframes wordmark-sweep {
+  from {
+    -webkit-mask-position: 120% 0;
+    mask-position: 120% 0;
+  }
+  to {
+    -webkit-mask-position: -20% 0;
+    mask-position: -20% 0;
   }
 }
 
@@ -515,6 +648,36 @@ body::after {
   }
   .mark-trace {
     animation: trace-run 5s linear infinite;
+  }
+
+  .mock-scroll {
+    animation: mock-scroll 18s linear infinite;
+  }
+  .mock-line {
+    animation: mock-line 7s var(--ease-out-expo) infinite both;
+    animation-delay: var(--delay, 0ms);
+  }
+  .mock-press {
+    animation: mock-press 7s ease infinite;
+    animation-delay: 200ms;
+  }
+  .mock-bar {
+    animation: mock-bar 6s var(--ease-out-expo) infinite both;
+    animation-delay: var(--delay, 0ms);
+  }
+  .mock-glow {
+    animation: mock-glow 5s ease-in-out infinite;
+  }
+  .mock-toggle {
+    animation: mock-toggle 9s ease infinite both;
+    animation-delay: var(--delay, 0ms);
+  }
+  .mock-toggle .mock-knob {
+    animation: mock-knob 9s var(--ease-out-expo) infinite both;
+    animation-delay: var(--delay, 0ms);
+  }
+  .wordmark-sweep {
+    animation: wordmark-sweep 9s ease-in-out infinite;
   }
 
   /* Revelação ao rolar: scroll-driven animations quando suportado.

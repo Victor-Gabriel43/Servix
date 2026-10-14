@@ -50,11 +50,11 @@ export function SystemStackFallback() {
             .filter((t) => t.tile.layer === layer)
             .map(({ tile, top, bottom }) => (
               <g key={tile.id}>
-                <polygon points={points(bottom)} fill="rgb(6 9 15 / 0.9)" />
+                <polygon points={points(bottom)} fill="rgb(3 3 4 / 0.9)" />
                 <polygon
                   points={points(top)}
-                  fill={tile.accent ? "rgb(66 217 255 / 0.16)" : "rgb(20 28 42 / 0.82)"}
-                  stroke={tile.accent ? "rgb(66 217 255 / 0.95)" : "rgb(160 168 184 / 0.3)"}
+                  fill={tile.accent ? "rgb(66 217 255 / 0.16)" : "rgb(22 22 26 / 0.82)"}
+                  stroke={tile.accent ? "rgb(66 217 255 / 0.95)" : "rgb(161 161 170 / 0.3)"}
                   strokeWidth="1"
                   strokeLinejoin="round"
                 />
@@ -64,7 +64,7 @@ export function SystemStackFallback() {
             const corners = tiles.filter((t) => t.tile.layer === layer).flatMap((t) => t.top);
             const left = corners.reduce((a, b) => (b.x < a.x ? b : a));
             return (
-              <g fill="rgb(160 168 184 / 0.85)" stroke="rgb(160 168 184 / 0.35)">
+              <g fill="rgb(161 161 170 / 0.85)" stroke="rgb(161 161 170 / 0.35)">
                 <line x1={left.x - 10} y1={left.y} x2={left.x - 34} y2={left.y} />
                 <text
                   x={left.x - 40}

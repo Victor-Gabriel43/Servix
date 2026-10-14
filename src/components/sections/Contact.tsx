@@ -24,7 +24,7 @@ export function Contact() {
             <span className="text-accent">06</span>
             {contact.label}
           </p>
-          <h2 id="contato-title" data-reveal className="mt-6 text-display font-semibold text-fg">
+          <h2 id="contato-title" data-reveal className="text-gradient pb-1 mt-6 text-display font-semibold">
             {contact.title}
           </h2>
           <p data-reveal className="mt-7 max-w-lg text-lead text-muted">

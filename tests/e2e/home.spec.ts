@@ -154,26 +154,45 @@ test.describe("Formulário de contato", () => {
 });
 
 test.describe("Elemento visual e movimento", () => {
-  test("canvas anima quando disponível", async ({ page }) => {
+  test("marca 3D e visual de camadas animam quando há canvas", async ({ page }) => {
     await page.goto("/");
+    await expect(page.getByTestId("brand-mark")).toHaveAttribute("data-state", "ready");
+    await page.getByTestId("system-stack").scrollIntoViewIfNeeded();
     await expect(page.getByTestId("system-stack")).toHaveAttribute("data-state", "ready");
   });
 
-  test("sem canvas, o SVG estático permanece visível", async ({ page }) => {
+  test("a marca 3D pode ser arrastada sem quebrar a página", async ({ page, isMobile }) => {
+    test.skip(isMobile, "arraste com mouse");
+    const errors: string[] = [];
+    page.on("pageerror", (e) => errors.push(e.message));
+    await page.goto("/");
+    const box = (await page.getByTestId("brand-mark").boundingBox())!;
+    await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+    await page.mouse.down();
+    await page.mouse.move(box.x + box.width * 0.9, box.y + box.height / 2, { steps: 8 });
+    await page.mouse.up();
+    await page.waitForTimeout(300);
+    expect(errors).toEqual([]);
+  });
+
+  test("sem canvas, os SVGs estáticos permanecem visíveis", async ({ page }) => {
     await page.addInitScript(() => {
       HTMLCanvasElement.prototype.getContext = () => null;
     });
     await page.goto("/");
-    const stack = page.getByTestId("system-stack");
-    await expect(stack).toHaveAttribute("data-state", "unsupported");
-    await expect(stack.locator(".stack-fallback svg")).toBeVisible();
-    await expect(stack.locator(".stack-fallback")).toHaveCSS("opacity", "1");
+    for (const id of ["brand-mark", "system-stack"]) {
+      const el = page.getByTestId(id);
+      await expect(el).toHaveAttribute("data-state", "unsupported");
+      await expect(el.locator(".stack-fallback")).toHaveCSS("opacity", "1");
+    }
+    await expect(page.getByTestId("brand-mark").locator(".stack-fallback svg")).toBeVisible();
   });
 
   test("com movimento reduzido, mostra quadro estático e todo o conteúdo", async ({ page }) => {
     await page.emulateMedia({ reducedMotion: "reduce" });
     await page.goto("/");
-    await expect(page.getByTestId("system-stack")).toHaveAttribute("data-state", "ready");
+    await expect(page.getByTestId("brand-mark")).toHaveAttribute("data-state", "ready");
+    await expect(page.locator("#hero-title .word").first()).toHaveCSS("opacity", "1");
     await page.locator("#contato").scrollIntoViewIfNeeded();
     await expect(page.locator("#contato-title")).toHaveCSS("opacity", "1");
   });
@@ -185,7 +204,7 @@ test.describe("Sem JavaScript", () => {
   test("conteúdo e visual estático continuam acessíveis", async ({ page }) => {
     await page.goto("/");
     await expect(page.locator("h1")).toBeVisible();
-    await expect(page.getByTestId("system-stack").locator(".stack-fallback")).toHaveCSS("opacity", "1", { timeout: 5000 });
+    await expect(page.getByTestId("brand-mark").locator(".stack-fallback")).toHaveCSS("opacity", "1", { timeout: 5000 });
     await expect(page.getByRole("link", { name: /Conversar sobre meu negócio/ })).toHaveAttribute("href", "#contato");
   });
 });

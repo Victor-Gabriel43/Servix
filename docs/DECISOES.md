@@ -2,9 +2,15 @@
 
 ## Direção visual
 
-- **Base escura premium**: fundo `#080B12`, superfícies `#101622`, texto
-  `#F5F7FA` / `#A0A8B8`. O ciano `#42D9FF` é usado com parcimônia: CTA
-  principal, índices de seção, estados ativos e o elemento visual.
+- **Monocromático, inspirado em estúdios como a Resend**: preto puro,
+  grafites neutros, títulos com degradê de branco para cinza e botão
+  principal branco. O ciano `#42D9FF` virou assinatura pontual da marca
+  (pulso de dados, índices, foco), não cor dominante.
+- **Textura**: facho de luz no hero, grade de pontos e granulação de filme
+  (SVG estático) para tirar o aspecto "chapado" do preto.
+- **Painéis** com brilho e borda que seguem o cursor (`PointerSpotlight`:
+  um único listener, atualização por quadro, desligado em toque e com
+  movimento reduzido).
 - **Tipografia**: Geist Sans (títulos e texto) e Geist Mono (rótulos técnicos),
   auto-hospedadas via pacote `geist` — sem requisição a terceiros.
 - **Variedade de layout**: cada seção tem uma composição própria (lista
@@ -13,7 +19,19 @@
 - **Marca**: monograma "SX" e logotipo "SERVIX" redesenhados em vetor a partir
   das imagens enviadas; cor via `currentColor`.
 
-## Elemento visual — "camadas de um sistema"
+## Marca 3D do hero
+
+O "S" do logotipo Servix extrudado em 3D, em cromo negro, com um pulso de
+dados ciano percorrendo o contorno. Gira suavemente, inclina com o cursor,
+reage à rolagem e pode ser arrastado (inércia + retorno elástico).
+
+- Mesmo motor de projeção do visual de camadas, canvas 2D, sem bibliotecas.
+- Começa em `requestIdleCallback` para não competir com o carregamento e
+  só anima enquanto visível.
+- Fallback SVG gerado no servidor com a mesma geometria; o pulso do
+  contorno é animado só com CSS (funciona sem JavaScript).
+
+## Elemento visual — "camadas de um sistema" (painel "A oportunidade")
 
 Três planos modulares (dados → processos → interface). Os módulos chegam
 dispersos (informações espalhadas do negócio) e se encaixam; pulsos de dados

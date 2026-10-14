@@ -20,7 +20,7 @@ export function About() {
         </p>
 
         <div className="mt-8 grid gap-10 lg:grid-cols-[1.2fr_1fr] lg:gap-20">
-          <h2 id="sobre-title" data-reveal className="text-title font-semibold text-fg lg:text-[clamp(2.5rem,1.5rem+2.8vw,4rem)]">
+          <h2 id="sobre-title" data-reveal className="text-gradient pb-1 text-title font-semibold lg:text-[clamp(2.5rem,1.5rem+2.8vw,4rem)]">
             {about.title}
           </h2>
           <div data-reveal className="lg:pt-3">

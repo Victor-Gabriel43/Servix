@@ -14,7 +14,7 @@ export function SectionHeading({ index, label, title, lead, id, className = "" }
         <span className="text-accent">{index}</span>
         {label}
       </p>
-      <h2 id={id} className="mt-5 text-title font-semibold text-fg" data-reveal>
+      <h2 id={id} className="text-gradient mt-5 pb-1 text-title font-semibold" data-reveal>
         {title}
       </h2>
       {lead ? (

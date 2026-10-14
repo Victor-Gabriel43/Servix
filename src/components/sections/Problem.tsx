@@ -1,5 +1,7 @@
 import { problem } from "@/content/home";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { SystemStack } from "@/components/visual/SystemStack";
+import { SystemStackFallback } from "@/components/visual/SystemStackFallback";
 
 export function Problem() {
   return (
@@ -30,21 +32,30 @@ export function Problem() {
 
       {/* Ponte: da dor para a oportunidade */}
       <div className="container-page mt-20 md:mt-28">
-        <div data-reveal className="panel relative overflow-hidden px-6 py-12 sm:px-12 md:py-16">
+        <div data-reveal className="panel relative overflow-hidden px-6 pt-12 sm:px-12 md:py-6">
           <div
             aria-hidden="true"
-            className="bg-grid pointer-events-none absolute inset-0 opacity-60 [mask-image:linear-gradient(90deg,transparent,black_60%)]"
+            className="bg-dots pointer-events-none absolute inset-0 opacity-70 [mask-image:linear-gradient(90deg,transparent,black_70%)]"
           />
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute -right-20 top-1/2 size-80 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgb(66_217_255/0.16),transparent_65%)]"
+            className="pointer-events-none absolute -right-20 top-1/2 size-96 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgb(66_217_255/0.12),transparent_65%)]"
           />
-          <div className="relative grid gap-8 md:grid-cols-[auto_1fr] md:items-end md:gap-16">
-            <div>
+          <div className="relative grid gap-6 md:grid-cols-[1fr_1.1fr] md:items-center md:gap-10">
+            <div className="md:py-10">
               <p className="eyebrow">{problem.opportunity.label}</p>
-              <h3 className="mt-5 max-w-md text-title font-semibold text-fg">{problem.opportunity.title}</h3>
+              <h3 className="text-gradient mt-5 max-w-md pb-1 text-title font-semibold">{problem.opportunity.title}</h3>
+              <p className="mt-6 max-w-lg text-lead text-muted">{problem.opportunity.text}</p>
             </div>
-            <p className="max-w-xl text-lead text-muted">{problem.opportunity.text}</p>
+            <figure className="relative -mx-6 aspect-[6/5] sm:-mx-12 md:mx-0 md:aspect-square md:max-h-[26rem]">
+              <SystemStack>
+                <SystemStackFallback />
+              </SystemStack>
+              <figcaption className="sr-only">
+                Ilustração: módulos dispersos se encaixam em três camadas — dados, processos e interface —
+                representando a organização dos processos de um negócio em um sistema.
+              </figcaption>
+            </figure>
           </div>
         </div>
       </div>

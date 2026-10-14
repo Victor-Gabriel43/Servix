@@ -1,47 +1,51 @@
-import { ArrowRight, ArrowDown } from "lucide-react";
+import { ArrowDown, ArrowRight } from "lucide-react";
 
 import { hero } from "@/content/home";
-import { SystemStack } from "@/components/visual/SystemStack";
-import { SystemStackFallback } from "@/components/visual/SystemStackFallback";
+import { BrandMark3D } from "@/components/visual/BrandMark3D";
+import { BrandMarkFallback } from "@/components/visual/BrandMarkFallback";
+
+const delay = (ms: number) => ({ "--delay": `${ms}ms` }) as React.CSSProperties;
+
+/** Divide o texto em palavras para a revelação escalonada do título. */
+function Words({ text, from, className }: { text: string; from: number; className?: string }) {
+  return text.split(" ").map((word, i) => (
+    <span key={`${word}-${i}`} className={`word inline-block ${className ?? ""}`} style={delay(from + i * 30)}>
+      {word}
+      {" "}
+    </span>
+  ));
+}
 
 export function Hero() {
+  const startWords = hero.titleStart.split(" ").length;
+
   return (
-    <section id="inicio" aria-labelledby="hero-title" className="relative isolate overflow-hidden pt-24 md:pt-28">
-      {/* Fundo: grade técnica com máscara radial e brilho seletivo atrás do visual */}
+    <section id="inicio" aria-labelledby="hero-title" className="relative isolate overflow-hidden pt-28 md:pt-36">
+      {/* Fundo: facho de luz vindo do topo, grade de pontos e horizonte */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
-        <div className="bg-grid absolute inset-0 [mask-image:radial-gradient(ellipse_70%_60%_at_70%_40%,black,transparent_75%)]" />
-        <div className="absolute right-[-10%] top-[8%] size-[42rem] max-w-[120vw] rounded-full bg-[radial-gradient(circle,rgb(66_217_255/0.13),transparent_62%)]" />
-        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-ink" />
+        <div className="hero-beam absolute left-1/2 top-0 h-[44rem] w-[min(90rem,180vw)] -translate-x-1/2" />
+        <div className="bg-dots absolute inset-0 [mask-image:radial-gradient(ellipse_60%_50%_at_70%_40%,black,transparent_75%)]" />
+        <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
       </div>
 
-      <div className="container-page grid items-center gap-6 pb-16 md:pb-24 lg:min-h-[calc(100svh-7rem)] lg:grid-cols-[1.15fr_1fr] lg:gap-6">
+      <div className="container-page grid items-center gap-4 pb-20 md:pb-28 lg:min-h-[calc(100svh-9rem)] lg:grid-cols-[1.2fr_1fr] lg:gap-8">
         <div className="relative z-10 max-w-2xl">
-          <p className="eyebrow enter" style={{ "--delay": "0ms" } as React.CSSProperties}>
+          <a href="#solucoes" className="pill enter" style={delay(0)}>
+            <span aria-hidden="true" className="pulse-ring size-1.5 rounded-full bg-accent" />
             {hero.eyebrow}
-          </p>
+            <ArrowRight className="size-3.5 text-subtle transition-transform duration-300 group-hover/pill:translate-x-0.5" aria-hidden="true" />
+          </a>
 
-          <h1
-            id="hero-title"
-            className="enter-text mt-6 text-display font-semibold text-fg"
-            style={{ "--delay": "60ms" } as React.CSSProperties}
-          >
-            {hero.titleStart}{" "}
-            <span className="bg-gradient-to-r from-accent via-accent-strong to-fg bg-clip-text text-transparent">
-              {hero.titleHighlight}
-            </span>
+          <h1 id="hero-title" className="mt-8 text-display font-semibold">
+            <Words text={hero.titleStart} from={80} className="text-gradient" />
+            <Words text={hero.titleHighlight} from={80 + startWords * 30} className="text-gradient-accent" />
           </h1>
 
-          <p
-            className="enter-text mt-7 max-w-xl text-lead text-muted"
-            style={{ "--delay": "160ms" } as React.CSSProperties}
-          >
+          <p className="enter-text mt-7 max-w-xl text-lead text-muted" style={delay(240)}>
             {hero.lead}
           </p>
 
-          <div
-            className="enter mt-10 flex flex-col gap-3 sm:flex-row sm:items-center"
-            style={{ "--delay": "260ms" } as React.CSSProperties}
-          >
+          <div className="enter mt-10 flex flex-col gap-3 sm:flex-row sm:items-center" style={delay(340)}>
             <a href={hero.primaryCta.href} className="btn btn-primary">
               {hero.primaryCta.label}
               <ArrowRight className="btn-icon size-4" aria-hidden="true" />
@@ -53,13 +57,15 @@ export function Hero() {
           </div>
 
           <ul
-            className="enter mt-12 grid gap-3 border-t border-line pt-6 font-mono text-xs text-subtle sm:grid-cols-3 sm:gap-4"
-            style={{ "--delay": "380ms" } as React.CSSProperties}
+            className="enter mt-14 grid gap-3 font-mono text-xs text-subtle sm:grid-cols-3 sm:gap-6"
+            style={delay(440)}
             aria-label="Como a Servix trabalha"
           >
-            {hero.highlights.map((item) => (
+            {hero.highlights.map((item, i) => (
               <li key={item} className="flex items-start gap-2.5 leading-relaxed">
-                <span aria-hidden="true" className="mt-[0.45em] size-1.5 shrink-0 rotate-45 bg-accent" />
+                <span aria-hidden="true" className="text-accent">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
                 {item}
               </li>
             ))}
@@ -67,15 +73,23 @@ export function Hero() {
         </div>
 
         <figure
-          className="enter relative -mx-5 aspect-[6/5] max-h-[38rem] sm:aspect-square w-[calc(100%+2.5rem)] sm:mx-auto sm:w-full sm:max-w-[34rem] lg:max-w-none"
-          style={{ "--delay": "120ms" } as React.CSSProperties}
+          className="enter-mark relative -order-1 mx-auto -mt-6 mb-2 aspect-square w-full max-w-[17rem] sm:max-w-[26rem] lg:order-none lg:m-0 lg:mx-auto lg:max-w-[38rem]"
+          style={delay(150)}
         >
-          <SystemStack>
-            <SystemStackFallback />
-          </SystemStack>
-          <figcaption className="sr-only">
-            Ilustração: módulos dispersos se encaixam em três camadas — dados, processos e interface —
-            representando a organização dos processos de um negócio em um sistema.
+          {/* Halo e anel orbital atrás da marca */}
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
+            <div className="absolute inset-[8%] rounded-full bg-[radial-gradient(circle,rgb(66_217_255/0.22),rgb(255_255_255/0.06)_38%,transparent_68%)] blur-2xl" />
+            <div className="orbit absolute inset-[4%] rounded-full" />
+            <div className="orbit orbit-slow absolute inset-[16%] rounded-full" />
+          </div>
+          <BrandMark3D>
+            <BrandMarkFallback />
+          </BrandMark3D>
+          <figcaption className="pointer-events-none absolute inset-x-0 bottom-0 text-center font-mono text-[0.7rem] uppercase tracking-[0.2em] text-subtle">
+            <span aria-hidden="true" className="hidden motion-reduce:hidden lg:inline">
+              Arraste para girar
+            </span>
+            <span className="sr-only">Marca Servix em 3D, com um pulso de dados percorrendo o contorno do S.</span>
           </figcaption>
         </figure>
       </div>

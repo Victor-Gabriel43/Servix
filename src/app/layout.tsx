@@ -3,6 +3,7 @@ import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 
 import { getSiteUrl, isIndexingAllowed, siteConfig } from "@/config/site";
+import { PointerSpotlight } from "@/components/ui/PointerSpotlight";
 
 import "./globals.css";
 
@@ -36,14 +37,17 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#080b12",
+  themeColor: "#000000",
   colorScheme: "dark",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR" className={`${GeistSans.variable} ${GeistMono.variable}`}>
-      <body className="min-h-dvh">{children}</body>
+      <body className="min-h-dvh">
+        {children}
+        <PointerSpotlight />
+      </body>
     </html>
   );
 }

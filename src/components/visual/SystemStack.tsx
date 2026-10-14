@@ -96,13 +96,13 @@ function draw(ctx: Ctx, scene: Scene, cam: Camera, assembly: number, time: numbe
 
       const bottom = tileCorners({ ...pose.center, y: pose.center.y - SLAB }, scene.tileHalf, pose.spin, cam);
       path(ctx, bottom);
-      ctx.fillStyle = `rgb(6 9 15 / ${0.9 * alpha})`;
+      ctx.fillStyle = `rgb(3 3 4 / ${0.9 * alpha})`;
       ctx.fill();
 
       const top = tileCorners(pose.center, scene.tileHalf, pose.spin, cam);
       path(ctx, top);
       const fillA = tile.accent ? 0.16 + 0.12 * g : 0.06 * g;
-      ctx.fillStyle = `rgb(20 28 42 / ${0.82 * alpha})`;
+      ctx.fillStyle = `rgb(22 22 26 / ${0.82 * alpha})`;
       ctx.fill();
       if (fillA > 0) {
         ctx.fillStyle = `rgb(${ACCENT} / ${fillA * alpha})`;
@@ -111,7 +111,7 @@ function draw(ctx: Ctx, scene: Scene, cam: Camera, assembly: number, time: numbe
       ctx.lineWidth = 1;
       ctx.strokeStyle = tile.accent
         ? `rgb(${ACCENT} / ${0.95 * alpha})`
-        : `rgb(160 168 184 / ${(0.3 + 0.35 * g) * alpha})`;
+        : `rgb(161 161 170 / ${(0.3 + 0.35 * g) * alpha})`;
       ctx.stroke();
     }
 
@@ -125,12 +125,12 @@ function draw(ctx: Ctx, scene: Scene, cam: Camera, assembly: number, time: numbe
       }
       if (left) {
         const size = Math.max(10, Math.round(cam.scale * 0.105));
-        ctx.strokeStyle = `rgb(160 168 184 / ${0.35 * settled})`;
+        ctx.strokeStyle = `rgb(161 161 170 / ${0.35 * settled})`;
         ctx.beginPath();
         ctx.moveTo(left.x - 10, left.y);
         ctx.lineTo(left.x - 34, left.y);
         ctx.stroke();
-        ctx.fillStyle = `rgb(160 168 184 / ${0.85 * settled})`;
+        ctx.fillStyle = `rgb(161 161 170 / ${0.85 * settled})`;
         ctx.font = `500 ${size}px ${monoFont}`;
         ctx.textAlign = "right";
         ctx.textBaseline = "middle";
@@ -175,7 +175,7 @@ export function SystemStack({ children }: { children: React.ReactNode }) {
     let width = 0;
     let height = 0;
     let frame = 0;
-    let visible = true;
+    let visible = false; // definido pelo IntersectionObserver
     let start = 0;
     const pointer = { x: 0, y: 0 };
     const view = { yaw: REST_YAW, pitch: REST_PITCH };
@@ -248,7 +248,7 @@ export function SystemStack({ children }: { children: React.ReactNode }) {
     resizeObserver.observe(canvas);
 
     const intersection = new IntersectionObserver(([entry]) => {
-      visible = entry?.isIntersecting ?? true;
+      visible = entry?.isIntersecting ?? false;
       if (visible) play();
       else stop();
     });
